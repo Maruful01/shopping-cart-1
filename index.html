@@ -43,12 +43,12 @@
                      </div>
                      <div class="col-md-5 center-item">
                         <div class="input-group number-spinner">
-                           <button class="btn btn-default"><i class="fas fa-minus"></i></button>
-                           <input type="text" class="form-control text-center" value="1">
-                           <button class="btn btn-default"><i class="fas fa-plus"></i></button>
+                           <button class="btn btn-default" id="minus-button2"><i class="fas fa-minus"></i></button>
+                           <input type="text" class="form-control text-center" id="plous-input2" value="1">
+                           <button class="btn btn-default" id="plous-button2"><i class="fas fa-plus"></i></button>
 
                         </div>
-                        <h5>$59</h5>
+                        <h5> $<span id="prise-2">59</span> </h5>
                         <img src="images/remove.png" alt="" class="remove-item">
                      </div>
                   </div>
@@ -79,17 +79,25 @@
    </section>
 
    <script>
-      const plousButton = document.getElementById ("plous-button1");
+     // button 1 
+      plousButtonHandler ("plous-button1", "prise", "plous-input", 1219)
+      plousButtonHandler ("plous-button2", "prise-2", "plous-input2", 59)
+
+      function plousButtonHandler (button, prise, input, number) {
+         const plousButton = document.getElementById (button);
          plousButton.addEventListener("click", function () {
    
-         const inputValueNum = inputValueToNumber ("plous-input");
+         const inputValueNum = inputValueToNumber (input);
          const increaseValue = inputValueNum + 1;
-         document.getElementById ("plous-input").value = increaseValue;
+         document.getElementById (input).value = increaseValue;
            
-         const currentPriseNum = innerTextToNumber ("prise");   
-         const currentPrise =  currentPriseNum + 1219;
-         document.getElementById ("prise").innerText = currentPrise;
+         const currentPriseNum = innerTextToNumber (prise);   
+         const currentPrise =  currentPriseNum + number;
+         document.getElementById (prise).innerText = currentPrise;
       })
+
+      }
+
       function  innerTextToNumber (id) {
          const number = document.getElementById (id).innerText;
          const newNum = parseFloat (number);
@@ -100,27 +108,34 @@
          const ValueNum = parseFloat (Value);
          return ValueNum;
       }
-      const minusButton = document.getElementById ("minus-button");
+      
+minusButtonHandler ("minus-button", "plous-input", "prise", 1219);
+minusButtonHandler ("minus-button2", "plous-input2", "prise-2", 59);
+function minusButtonHandler (button, input, prise, number) {
+
+   const minusButton = document.getElementById (button);
       minusButton.addEventListener("click", function () {
    
-       const inputValueNum = inputValueToNumber ("plous-input");
+       const inputValueNum = inputValueToNumber (input);
        const dicraceValue = inputValueNum - 1;
-       document.getElementById ("plous-input").value = dicraceValue;
+       document.getElementById (input).value = dicraceValue;
 
-       const dicracePrise = innerTextToNumber ("prise");
-       const latestPrise = dicracePrise - 1219;
-       document.getElementById ("prise").innerText = latestPrise;
+       const dicracePrise = innerTextToNumber (prise);
+       const latestPrise = dicracePrise - (number);
+       document.getElementById (prise).innerText = latestPrise;
 
    if (dicraceValue < 1) {
 
-      document.getElementById ("plous-input").value = 1;
+      document.getElementById (input).value = 1;
    }
-   if (dicracePrise == 1219) {
+   if (dicracePrise == number) {
 
-      document.getElementById ("prise").innerText = 1219;
+      document.getElementById (prise).innerText = dicracePrise;
    }
    
 })
+}
+
       
    
    </script>
