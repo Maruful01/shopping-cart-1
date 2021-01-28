@@ -64,9 +64,9 @@
                      </div>
 
                      <div class="col-md-4 status">
-                        <h5>$ <span id="subtotal">1,278</span> </h5>
-                        <h5>$0</h5>
-                        <h5>$1,278</h5>
+                        <h5>$ <span id="subtotal-prise">12,78</span> </h5>
+                        <h5 id="total-tax"> $13</h5>
+                        <h5 id="total-priae"> $1,278 </h5>
                      </div>
                   </div>
                </div>
@@ -79,11 +79,11 @@
    </section>
 
    <script>
-     // button 1 
-      plousButtonHandler ("plous-button1", "prise", "plous-input", 1219)
-      plousButtonHandler ("plous-button2", "prise-2", "plous-input2", 59)
+     // button 
+      const product1 =  plousButtonHandler ("plous-button1", "prise", "plous-input", 1219, "subtotal-prise")
+      const product2 = plousButtonHandler ("plous-button2", "prise-2", "plous-input2", 59, "subtotal-prise")
 
-      function plousButtonHandler (button, prise, input, number) {
+      function plousButtonHandler (button, prise, input, number, subtotal) {
          const plousButton = document.getElementById (button);
          plousButton.addEventListener("click", function () {
    
@@ -94,9 +94,35 @@
          const currentPriseNum = innerTextToNumber (prise);   
          const currentPrise =  currentPriseNum + number;
          document.getElementById (prise).innerText = currentPrise;
+         total (1219, 59)
       })
 
       }
+      // tital add 
+      function total (prise1, prise2) {
+
+         const phoneInput = inputValueToNumber ("plous-input");
+         const caseInput = inputValueToNumber ("plous-input2");
+
+         const SubtotalPrise = phoneInput * (prise1) + caseInput *  (prise2);
+         document.getElementById ("subtotal-prise").innerText = SubtotalPrise;
+         
+         const tax = SubtotalPrise * 0.01;
+         const taxCeil = Math.round (tax);
+         document.getElementById ("total-tax").innerText = '$' + taxCeil;
+         
+         const totalPrise = taxCeil + SubtotalPrise;
+          document.getElementById ("total-priae"). innerText = "$ " + totalPrise;
+
+          if (SubtotalPrise <= 0) {
+
+            document.getElementById ("subtotal-prise").innerText = 0;
+            document.getElementById ("total-tax").innerText = '$' + 0;
+            document.getElementById ("total-priae"). innerText = "$ " + 0;
+
+          }
+      }
+      
 
       function  innerTextToNumber (id) {
          const number = document.getElementById (id).innerText;
@@ -105,7 +131,7 @@
          }  
       function inputValueToNumber (id) {
          const Value = document.getElementById (id).value;
-         const ValueNum = parseFloat (Value);
+         const ValueNum = parseInt (Value);
          return ValueNum;
       }
       
@@ -123,19 +149,32 @@ function minusButtonHandler (button, input, prise, number) {
        const dicracePrise = innerTextToNumber (prise);
        const latestPrise = dicracePrise - (number);
        document.getElementById (prise).innerText = latestPrise;
+       total (1219, 59)
+   if (dicraceValue <= 0) {
 
-   if (dicraceValue < 1) {
-
-      document.getElementById (input).value = 1;
+      document.getElementById (input).value = 0;
+      document.getElementById (prise).innerText = 0;
    }
-   if (dicracePrise == number) {
 
-      document.getElementById (prise).innerText = dicracePrise;
-   }
    
 })
 }
+// tital minus 
+function totalMinus (prise1, prise2) {
 
+const phoneInput = inputValueToNumber ("plous-input");
+const caseInput = inputValueToNumber ("plous-input2");
+
+const SubtotalPrise = phoneInput * (prise1) + caseInput *  (prise2);
+document.getElementById ("subtotal-prise").innerText = SubtotalPrise;
+
+const tax = SubtotalPrise * 0.01;
+const taxCeil = Math.round (tax);
+document.getElementById ("total-tax").innerText = '$' + taxCeil;
+
+const totalPrise = taxCeil + SubtotalPrise;
+ document.getElementById ("total-priae"). innerText = "$ " + totalPrise;
+}
       
    
    </script>
